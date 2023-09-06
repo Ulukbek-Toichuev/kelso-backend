@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.78.136:5432/postgres
+    url: jdbc:postgresql://192.168.31.244:5432/test_db_1
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
@@ -19,5 +19,5 @@ server:
 kelso:
   app:
     jwtCookieName: kelso
-    jwtSecret: 12345678910
+    jwtSecret: 80844d0228eed81acf109fc54bb253bf9c849d6b91e92e0f1fade2c07c138dd6
     jwtExpirationMs: 86400000
