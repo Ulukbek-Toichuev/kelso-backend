@@ -1,9 +1,9 @@
 package kg.kelso.kelsobackend.controller;
 
 import jakarta.validation.Valid;
-import kg.kelso.kelsobackend.models.LoginRequest;
-import kg.kelso.kelsobackend.models.PasswordResetRequest;
-import kg.kelso.kelsobackend.models.SignupRequest;
+import kg.kelso.kelsobackend.models.user.LoginRequest;
+import kg.kelso.kelsobackend.models.user.PasswordResetRequest;
+import kg.kelso.kelsobackend.models.user.SignupRequest;
 import kg.kelso.kelsobackend.service.auth.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

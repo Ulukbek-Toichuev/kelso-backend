@@ -1,4 +1,4 @@
-package kg.kelso.kelsobackend.models;
+package kg.kelso.kelsobackend.models.user;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -2,15 +2,16 @@ package kg.kelso.kelsobackend.entities.author;
 
 
 import jakarta.persistence.*;
+import kg.kelso.kelsobackend.entities.book.Book;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -23,11 +24,13 @@ public class Author {
 
     String author_name;
 
+    @OneToMany(mappedBy = "author")
+    private List<Book> books;
+
     Timestamp cdt;
 
     Timestamp mdt;
 
     Timestamp rdt;
-
 
 }

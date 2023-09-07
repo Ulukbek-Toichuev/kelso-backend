@@ -5,7 +5,7 @@ import kg.kelso.kelsobackend.dao.users.UserDao;
 import kg.kelso.kelsobackend.entities.user.Role;
 import kg.kelso.kelsobackend.entities.user.User;
 import kg.kelso.kelsobackend.enums.ERole;
-import kg.kelso.kelsobackend.models.*;
+import kg.kelso.kelsobackend.models.user.*;
 import kg.kelso.kelsobackend.service.auth.AuthService;
 import kg.kelso.kelsobackend.util.security.UserDetailsImpl;
 import kg.kelso.kelsobackend.util.security.jwt.JwtUtils;

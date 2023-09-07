@@ -1,10 +1,9 @@
 package kg.kelso.kelsobackend.service.auth;
 
 
-import kg.kelso.kelsobackend.models.LoginRequest;
-import kg.kelso.kelsobackend.models.MessageResponse;
-import kg.kelso.kelsobackend.models.PasswordResetRequest;
-import kg.kelso.kelsobackend.models.SignupRequest;
+import kg.kelso.kelsobackend.models.user.LoginRequest;
+import kg.kelso.kelsobackend.models.user.PasswordResetRequest;
+import kg.kelso.kelsobackend.models.user.SignupRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
