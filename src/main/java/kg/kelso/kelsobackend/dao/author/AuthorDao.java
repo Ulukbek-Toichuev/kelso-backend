@@ -12,6 +12,5 @@ import java.util.Optional;
 @Repository
 public interface AuthorDao extends JpaRepository<Author, Long> {
 
-    @Query("SELECT a.author_name FROM author a WHERE a.author_name = :author_name")
-    String findByName(@Param("author_name") String author_name);
+    Author findByName(String name);
 }

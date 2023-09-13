@@ -22,10 +22,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String author_name;
-
-    @OneToMany(mappedBy = "author")
-    private List<Book> books;
+    String name;
 
     Timestamp cdt;
 

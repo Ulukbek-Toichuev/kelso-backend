@@ -20,7 +20,7 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String genre_name;
+    String name;
 
     Timestamp cdt;
 

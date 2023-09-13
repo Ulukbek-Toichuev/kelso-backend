@@ -10,6 +10,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorModelResponse {
-    String author_name;
+public class AuthorModel {
+    String authorName;
 }

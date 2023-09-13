@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.31.244:5432/test_db_1
+    url: jdbc:postgresql://192.168.78.136:5432/kelso
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
