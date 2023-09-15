@@ -11,5 +11,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorModel {
+
+    Long id;
+
     String authorName;
 }

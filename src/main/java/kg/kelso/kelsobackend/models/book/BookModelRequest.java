@@ -17,6 +17,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookModelRequest {
 
+    Long id;
+
     String isbn;
 
     String title;

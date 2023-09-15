@@ -2,6 +2,7 @@ package kg.kelso.kelsobackend.controller;
 
 import kg.kelso.kelsobackend.models.author.AuthorModel;
 import kg.kelso.kelsobackend.service.author.AuthorService;
+import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,14 @@ public class AuthorController {
         return service.save(model.getAuthorName());
     }
 
-
     @GetMapping("/all")
     public List<AuthorModel> getAll(){
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public AuthorModel getById(@PathVariable Long id){
-        return new AuthorModel(service.getById(id));
+    public AuthorModel getById(@PathVariable Long id) throws NotFoundException {
+        return service.getById(id);
     }
 
 }

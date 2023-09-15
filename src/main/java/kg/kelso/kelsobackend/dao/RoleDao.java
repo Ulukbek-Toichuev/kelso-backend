@@ -1,4 +1,4 @@
-package kg.kelso.kelsobackend.dao.users;
+package kg.kelso.kelsobackend.dao;
 
 import kg.kelso.kelsobackend.entities.user.Role;
 import kg.kelso.kelsobackend.enums.ERole;

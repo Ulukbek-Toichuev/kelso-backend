@@ -1,6 +1,6 @@
 package kg.kelso.kelsobackend.service.genre;
 
-import kg.kelso.kelsobackend.dao.genre.GenreDao;
+import kg.kelso.kelsobackend.dao.GenreDao;
 import kg.kelso.kelsobackend.entities.genre.Genre;
 import kg.kelso.kelsobackend.models.genre.GenreModel;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
@@ -8,13 +8,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

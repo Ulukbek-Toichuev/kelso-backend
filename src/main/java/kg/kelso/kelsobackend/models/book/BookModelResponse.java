@@ -1,7 +1,6 @@
 package kg.kelso.kelsobackend.models.book;
 
 
-import kg.kelso.kelsobackend.enums.CoverType;
 import kg.kelso.kelsobackend.models.author.AuthorModel;
 import kg.kelso.kelsobackend.models.genre.GenreModel;
 import lombok.AccessLevel;
@@ -17,8 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookPreviewModelResponse {
+public class BookModelResponse {
 
+    Long id;
     String isbn;
 
     String title;

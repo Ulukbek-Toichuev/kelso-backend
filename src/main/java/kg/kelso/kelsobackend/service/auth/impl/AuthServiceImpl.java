@@ -1,12 +1,13 @@
 package kg.kelso.kelsobackend.service.auth.impl;
 
-import kg.kelso.kelsobackend.dao.users.RoleDao;
-import kg.kelso.kelsobackend.dao.users.UserDao;
+import kg.kelso.kelsobackend.dao.RoleDao;
+import kg.kelso.kelsobackend.dao.UserDao;
 import kg.kelso.kelsobackend.entities.user.Role;
 import kg.kelso.kelsobackend.entities.user.User;
 import kg.kelso.kelsobackend.enums.ERole;
 import kg.kelso.kelsobackend.models.user.*;
 import kg.kelso.kelsobackend.service.auth.AuthService;
+import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import kg.kelso.kelsobackend.util.security.UserDetailsImpl;
 import kg.kelso.kelsobackend.util.security.jwt.JwtUtils;
 import lombok.AccessLevel;
@@ -129,6 +130,10 @@ public class AuthServiceImpl implements AuthService {
                     , encoder.encode(passwordResetRequest.getPassword()));
             return ResponseEntity.ok(new MessageResponse("Successfully update password"));
         }
+    }
+
+    public User getById(Long id) throws NotFoundException {
+        return userDao.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     private User mapSignUpToUser(SignupRequest signUpRequest){

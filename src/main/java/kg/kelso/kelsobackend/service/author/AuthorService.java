@@ -2,12 +2,13 @@ package kg.kelso.kelsobackend.service.author;
 
 import kg.kelso.kelsobackend.entities.author.Author;
 import kg.kelso.kelsobackend.models.author.AuthorModel;
+import kg.kelso.kelsobackend.util.exception.NotFoundException;
 
 import java.util.List;
 
 public interface AuthorService {
 
-    String getById(Long id);
+    AuthorModel getById(Long id) throws NotFoundException;
 
     Long save(String authorName);
 

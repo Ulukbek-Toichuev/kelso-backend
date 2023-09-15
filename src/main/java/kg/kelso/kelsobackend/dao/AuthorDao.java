@@ -1,4 +1,4 @@
-package kg.kelso.kelsobackend.dao.author;
+package kg.kelso.kelsobackend.dao;
 
 import kg.kelso.kelsobackend.entities.author.Author;
 import org.springframework.data.jpa.repository.JpaRepository;

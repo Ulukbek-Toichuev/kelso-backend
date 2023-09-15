@@ -1,4 +1,4 @@
-package kg.kelso.kelsobackend.dao.genre;
+package kg.kelso.kelsobackend.dao;
 
 import kg.kelso.kelsobackend.entities.genre.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;

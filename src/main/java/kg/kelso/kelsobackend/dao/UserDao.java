@@ -1,4 +1,4 @@
-package kg.kelso.kelsobackend.dao.users;
+package kg.kelso.kelsobackend.dao;
 
 import jakarta.transaction.Transactional;
 import kg.kelso.kelsobackend.entities.user.User;

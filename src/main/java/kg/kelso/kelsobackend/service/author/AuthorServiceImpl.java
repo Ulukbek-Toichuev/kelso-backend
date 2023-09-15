@@ -1,8 +1,9 @@
 package kg.kelso.kelsobackend.service.author;
 
-import kg.kelso.kelsobackend.dao.author.AuthorDao;
+import kg.kelso.kelsobackend.dao.AuthorDao;
 import kg.kelso.kelsobackend.entities.author.Author;
 import kg.kelso.kelsobackend.models.author.AuthorModel;
+import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,9 +23,9 @@ public class AuthorServiceImpl implements AuthorService {
     AuthorDao dao;
 
     @Override
-    public String getById(Long id){
-        Optional<Author> optionalAuthor = dao.findById(id);
-        return optionalAuthor.isPresent() ? optionalAuthor.get().getName() : "Author with id: " + id + " is not found!";
+    public AuthorModel getById(Long id) throws NotFoundException {
+        Author author = dao.findById(id).orElseThrow(() -> new NotFoundException("Author with id: " + id + " not found"));
+        return new AuthorModel(author.getId(), author.getName());
     }
 
     @Override
@@ -40,6 +40,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorModel> getAll(){
-        return dao.findAll().stream().map(e -> new AuthorModel(e.getName())).collect(Collectors.toList());
+        return dao.findAll().stream().map(e -> new AuthorModel( e.getId(), e.getName())).collect(Collectors.toList());
     }
 }

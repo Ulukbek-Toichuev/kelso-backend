@@ -1,6 +1,6 @@
 package kg.kelso.kelsobackend.util.security;
 
-import kg.kelso.kelsobackend.dao.users.UserDao;
+import kg.kelso.kelsobackend.dao.UserDao;
 import kg.kelso.kelsobackend.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
