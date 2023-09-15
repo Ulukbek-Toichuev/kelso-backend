@@ -1,8 +1,8 @@
 package kg.kelso.kelsobackend.controller;
 
-import kg.kelso.kelsobackend.models.Genre.GenreModel;
+import kg.kelso.kelsobackend.models.genre.GenreModel;
 import kg.kelso.kelsobackend.service.genre.GenreService;
-import kg.kelso.kelsobackend.service.genre.GenreServiceImpl;
+import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,13 @@ public class GenreController {
     }
 
     @GetMapping("/{id}")
-    public GenreModel getById(@PathVariable Long id){
+    public GenreModel getById(@PathVariable Long id) throws NotFoundException {
         return service.getById(id);
     }
+
+    @GetMapping("/name/{name}")
+    public GenreModel getByName(@PathVariable String name) throws NotFoundException {
+        return service.getByName(name);
+    }
+
 }
