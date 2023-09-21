@@ -1,7 +1,7 @@
 package kg.kelso.kelsobackend.service.book;
 
-import kg.kelso.kelsobackend.models.book.BookModelRequest;
-import kg.kelso.kelsobackend.models.book.BookModelResponse;
+import kg.kelso.kelsobackend.model.book.BookModelRequest;
+import kg.kelso.kelsobackend.model.book.BookModelResponse;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 
 import java.util.List;

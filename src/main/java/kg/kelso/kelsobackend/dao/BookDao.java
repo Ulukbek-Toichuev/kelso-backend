@@ -36,9 +36,5 @@ public interface BookDao extends JpaRepository<Book, Long> {
             "JOIN authors a ON b.author_id = a.id " +
             "WHERE bg.genre_id = :genreId", nativeQuery = true)
     List<Book> getByGenreId(@Param("genreId") Long genreId);
-    /*
-    @Query("select b from Book b join Genre g on b.book_id = g. where Genre.genre_id = :genreId")
-    List<Book> getByGenre(@Param("genreId") Long genreId);
 
-     */
 }

@@ -1,6 +1,6 @@
 package kg.kelso.kelsobackend.service.genre;
 
-import kg.kelso.kelsobackend.models.genre.GenreModel;
+import kg.kelso.kelsobackend.model.genre.GenreModel;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 
 import java.util.List;

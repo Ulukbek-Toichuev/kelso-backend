@@ -2,7 +2,7 @@ package kg.kelso.kelsobackend.service.genre;
 
 import kg.kelso.kelsobackend.dao.GenreDao;
 import kg.kelso.kelsobackend.entities.genre.Genre;
-import kg.kelso.kelsobackend.models.genre.GenreModel;
+import kg.kelso.kelsobackend.model.genre.GenreModel;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

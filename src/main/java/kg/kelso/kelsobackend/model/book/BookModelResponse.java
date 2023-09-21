@@ -1,8 +1,8 @@
-package kg.kelso.kelsobackend.models.book;
+package kg.kelso.kelsobackend.model.book;
 
 
-import kg.kelso.kelsobackend.models.author.AuthorModel;
-import kg.kelso.kelsobackend.models.genre.GenreModel;
+import kg.kelso.kelsobackend.model.author.AuthorModel;
+import kg.kelso.kelsobackend.model.genre.GenreModel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

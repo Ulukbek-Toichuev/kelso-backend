@@ -1,7 +1,7 @@
-package kg.kelso.kelsobackend.models.book;
+package kg.kelso.kelsobackend.model.book;
 
 import kg.kelso.kelsobackend.enums.CoverType;
-import kg.kelso.kelsobackend.models.genre.GenreModel;
+import kg.kelso.kelsobackend.model.genre.GenreModel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

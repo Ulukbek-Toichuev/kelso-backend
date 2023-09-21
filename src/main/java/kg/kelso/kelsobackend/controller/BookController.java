@@ -1,7 +1,7 @@
 package kg.kelso.kelsobackend.controller;
 
-import kg.kelso.kelsobackend.models.book.BookModelRequest;
-import kg.kelso.kelsobackend.models.book.BookModelResponse;
+import kg.kelso.kelsobackend.model.book.BookModelRequest;
+import kg.kelso.kelsobackend.model.book.BookModelResponse;
 import kg.kelso.kelsobackend.service.book.BookService;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import lombok.AccessLevel;

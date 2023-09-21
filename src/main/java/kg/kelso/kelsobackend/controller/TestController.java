@@ -4,6 +4,7 @@ import kg.kelso.kelsobackend.entities.user.User;
 import kg.kelso.kelsobackend.service.auth.AuthService;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import kg.kelso.kelsobackend.util.security.UserDetailsImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -11,9 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
+@Slf4j
 public class TestController {
 
     @Autowired
@@ -42,7 +46,7 @@ public class TestController {
     public User adminAccess() throws NotFoundException {
         // Get the current authentication object
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+        log.info(String.valueOf(new Time(System.currentTimeMillis())));
         // Check if the user is authenticated
         if (authentication.isAuthenticated()) {
             // Get the current user's username (if available)

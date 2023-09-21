@@ -1,7 +1,7 @@
 package kg.kelso.kelsobackend.service.author;
 
 import kg.kelso.kelsobackend.entities.author.Author;
-import kg.kelso.kelsobackend.models.author.AuthorModel;
+import kg.kelso.kelsobackend.model.author.AuthorModel;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 
 import java.util.List;

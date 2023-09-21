@@ -1,12 +1,12 @@
-package kg.kelso.kelsobackend.service.auth.impl;
+package kg.kelso.kelsobackend.service.auth;
 
 import kg.kelso.kelsobackend.dao.RoleDao;
 import kg.kelso.kelsobackend.dao.UserDao;
 import kg.kelso.kelsobackend.entities.user.Role;
 import kg.kelso.kelsobackend.entities.user.User;
 import kg.kelso.kelsobackend.enums.ERole;
-import kg.kelso.kelsobackend.models.user.*;
-import kg.kelso.kelsobackend.service.auth.AuthService;
+import kg.kelso.kelsobackend.model.message.MessageResponse;
+import kg.kelso.kelsobackend.model.user.*;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import kg.kelso.kelsobackend.util.security.UserDetailsImpl;
 import kg.kelso.kelsobackend.util.security.jwt.JwtUtils;

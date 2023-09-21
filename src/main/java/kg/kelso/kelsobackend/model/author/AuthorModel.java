@@ -1,4 +1,4 @@
-package kg.kelso.kelsobackend.models.user;
+package kg.kelso.kelsobackend.model.author;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageResponse {
-    String message;
+public class AuthorModel {
+
+    Long id;
+
+    String authorName;
 }
