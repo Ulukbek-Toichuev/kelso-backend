@@ -1,10 +1,8 @@
 package kg.kelso.kelsobackend.controller;
 
-
-import kg.kelso.kelsobackend.model.subscription.SubscribeModelRequest;
-import kg.kelso.kelsobackend.model.subscription.SubscribeModelResponse;
+import kg.kelso.kelsobackend.model.subscription.*;
 import kg.kelso.kelsobackend.model.message.MessageResponse;
-import kg.kelso.kelsobackend.service.subscribe.SubscribeService;
+import kg.kelso.kelsobackend.service.subscribe.*;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import kg.kelso.kelsobackend.util.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +20,22 @@ import java.util.List;
 public class SubscriptionController {
 
     @Autowired
-    SubscribeService service;
+    SubscribeService subscribeService;
+
     @PostMapping("/save")
     public ResponseEntity<MessageResponse> subscribe(@RequestBody SubscribeModelRequest model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = getCurrentUser();
 
         if (authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
             if (principal instanceof UserDetailsImpl userDetails) {
                 try {
                     model.setUserId(userDetails.getId());
-                    service.saveSubscribe(model);
+                    subscribeService.saveSubscribe(model);
                     return ResponseEntity.ok(new MessageResponse("Subscription saved successfully"));
                 } catch (Exception e) {
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("An error occurred"));
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body(new MessageResponse(e.getMessage()));
                 }
             }
         }
@@ -45,34 +45,55 @@ public class SubscriptionController {
 
     @GetMapping("/history/{id}")
     public List<SubscribeModelResponse> getHistoryByUserId(@PathVariable Long id) {
-        return service.getHistoryByUserId(id);
+        return subscribeService.getHistoryByUserId(id);
     }
 
     @GetMapping("/get-all")
     public List<SubscribeModelResponse> getAll() {
-        return service.getAll();
+        return subscribeService.getAll();
     }
 
     @GetMapping()
     public List<SubscribeModelResponse> getByStatus(@RequestParam String status) {
-        return service.getByStatus(status);
+        return subscribeService.getByStatus(status);
     }
 
     @GetMapping("/update-status")
-    public MessageResponse updateStatus(@RequestParam String status, @RequestParam Long userId) throws NotFoundException {
+    public ResponseEntity<MessageResponse> updateStatus(@RequestParam String status, @RequestParam Long userId) {
         try {
-            return new MessageResponse(service.updateStatus(status, userId));
+            String message = subscribeService.updateStatus(status, userId);
+            return ResponseEntity.ok(new MessageResponse(message));
         }catch (NotFoundException e) {
-            return new MessageResponse(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse(e.getMessage()));
         }
     }
 
     @GetMapping("/active/{id}")
     public ResponseEntity<?> getActiveSubscribeByUserId(@PathVariable Long id) {
-        SubscribeModelResponse response = service.getActiveSubscribeByUserId(id);
+        SubscribeModelResponse response = subscribeService.getActiveSubscribeByUserId(id);
         return response != null ?
                 ResponseEntity.ok(response)
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Subscribe not found"));
+    }
+
+    @PostMapping("/get-book")
+    public ResponseEntity<MessageResponse> getBook(@RequestBody List<SubscribeDetailsModel> models) {
+        Authentication authentication = getCurrentUser();
+        if (authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetailsImpl userDetails) {
+                try {
+                    return subscribeService.saveBooking(models, userDetails.getId());
+                } catch (Exception e) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("An error occurred"));
+                }
+            }
+        }
+        return null;
+    }
+
+    private Authentication getCurrentUser(){
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
 }

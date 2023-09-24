@@ -30,4 +30,6 @@ public interface SubscribeDao extends JpaRepository<Subscribe, Long> {
     @Query("select s from Subscribe s where s.user.id = :id")
     List<Subscribe> getHistoryByUserId(@Param("id") Long id);
 
+
+
 }

@@ -21,6 +21,14 @@ public interface BookDao extends JpaRepository<Book, Long> {
     @Query("update Book b set b.price = :price, b.mdt = :mdt where b.book_id = :id")
     void updatePrice(@Param("price") BigInteger price, @Param("id") Long id, @Param("mdt") Timestamp mdt);
 
+    @Modifying
+    @Query("update Book b set b.is_available = false, b.available_count = :availableCount, b.mdt = :mdt where b.book_id = :id")
+    void updateAvailableStatus(@Param("id") Long id, @Param("availableCount") Integer availableCount, @Param("mdt") Timestamp mdt);
+
+    @Modifying
+    @Query("update Book b set b.available_count = :availableCount, b.mdt = :mdt where b.book_id = :book_id")
+    void updateAvailableCount(@Param("book_id") Long book_id, @Param("availableCount") Integer availableCount, @Param("mdt") Timestamp mdt);
+
     @Query("select b from Book b where b.author.id = :authorId")
     List<Book> getByAuthorId(@Param("authorId") Long authorId);
 
