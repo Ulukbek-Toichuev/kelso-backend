@@ -23,7 +23,7 @@ public class Subscribe {
     Long subscribe_id;
 
     @ManyToOne
-    @JoinColumn(nullable = false, unique = true)
+    @JoinColumn(nullable = false)
     User user;
 
     @Enumerated(EnumType.STRING)

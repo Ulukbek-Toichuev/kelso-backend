@@ -7,18 +7,21 @@ import kg.kelso.kelsobackend.entities.user.User;
 import kg.kelso.kelsobackend.enums.SubscribeStatus;
 import kg.kelso.kelsobackend.model.subscription.SubscribeModelRequest;
 import kg.kelso.kelsobackend.model.subscription.SubscribeModelResponse;
+import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,18 +42,26 @@ public class SubscribeServiceImpl implements SubscribeService{
 
         optionalUser.ifPresent(user -> {
             if (!user.getIs_block()){
-                subscribeDao.save(new Subscribe(
-                        null,
-                        user,
-                        SubscribeStatus.WAITING,
-                        new BigDecimal(String.valueOf(model.getDeposit())),
-                        new BigDecimal(String.valueOf(model.getPrice())),
-                        new Timestamp(System.currentTimeMillis()),
-                        getNextMothDate(), null, null
-                ));
+                if (subscribeDao.getByUserId(model.getUserId()).isEmpty()){
+                    subscribeDao.save(new Subscribe(
+                            null,
+                            user,
+                            SubscribeStatus.WAITING,
+                            new BigDecimal(String.valueOf(model.getDeposit())),
+                            new BigDecimal(String.valueOf(model.getPrice())),
+                            new Timestamp(System.currentTimeMillis()),
+                            getNextMothDate(), null, null
+                    ));
+                }
             }
         });
     }
+
+    @Override
+    public List<SubscribeModelResponse> getHistoryByUserId(Long userId) {
+        return subscribeDao.getHistoryByUserId(userId).stream().map(this::map).collect(Collectors.toList());
+    }
+
 
     @Override
     public List<SubscribeModelResponse> getAll() {
@@ -58,22 +69,28 @@ public class SubscribeServiceImpl implements SubscribeService{
     }
 
     @Override
-    public List<SubscribeModelResponse> getByStatus(SubscribeStatus status){
-        return subscribeDao.getByStatus(status).stream().map(this::map).collect(Collectors.toList());
+    public List<SubscribeModelResponse> getByStatus(String status){
+        return subscribeDao.getByStatus(mapToEnum(status)).stream().map(this::map).collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
+    public String updateStatus(String status, Long userId) throws NotFoundException {
+        Optional<Subscribe> optionalSubscribe = subscribeDao.getByUserId(userId);
+        if (optionalSubscribe.isPresent()) {
+            subscribeDao.updateStatus(mapToEnum(status), userId);
+            return "Status is successfully update";
+        }else{
+            throw new NotFoundException("Cant update subscribe status");
+        }
+    }
 
     @Override
     public SubscribeModelResponse getActiveSubscribeByUserId(Long id) {
         return subscribeDao.getActiveSubscribeByUserId(id).map(this::map).orElse(null);
     }
 
-    @Override
-    public SubscribeModelResponse getWaitingSubscribeByUserId(Long id) {
-        return subscribeDao.getWaitingSubscribeByUserId(id).map(this::map).orElse(null);
-    }
-
-    public SubscribeModelResponse map(Subscribe subscribe) {
+    private SubscribeModelResponse map(Subscribe subscribe) {
         return new SubscribeModelResponse(
                 subscribe.getSubscribe_id(),
                 subscribe.getUser().getId(),
@@ -89,5 +106,14 @@ public class SubscribeServiceImpl implements SubscribeService{
 
     private Timestamp getNextMothDate(){
         return Timestamp.valueOf(LocalDateTime.now().plusMonths(1));
+    }
+
+    private SubscribeStatus mapToEnum(String status) {
+        return switch (status) {
+            case "active" -> SubscribeStatus.ACTIVE;
+            case "expired" -> SubscribeStatus.EXPIRED;
+            case "waiting" -> SubscribeStatus.WAITING;
+            default -> SubscribeStatus.INACTIVE;
+        };
     }
 }

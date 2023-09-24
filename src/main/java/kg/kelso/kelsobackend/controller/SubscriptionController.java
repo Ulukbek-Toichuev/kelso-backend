@@ -5,6 +5,7 @@ import kg.kelso.kelsobackend.model.subscription.SubscribeModelRequest;
 import kg.kelso.kelsobackend.model.subscription.SubscribeModelResponse;
 import kg.kelso.kelsobackend.model.message.MessageResponse;
 import kg.kelso.kelsobackend.service.subscribe.SubscribeService;
+import kg.kelso.kelsobackend.util.exception.NotFoundException;
 import kg.kelso.kelsobackend.util.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -40,6 +43,30 @@ public class SubscriptionController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("User not authenticated"));
     }
 
+    @GetMapping("/history/{id}")
+    public List<SubscribeModelResponse> getHistoryByUserId(@PathVariable Long id) {
+        return service.getHistoryByUserId(id);
+    }
+
+    @GetMapping("/get-all")
+    public List<SubscribeModelResponse> getAll() {
+        return service.getAll();
+    }
+
+    @GetMapping()
+    public List<SubscribeModelResponse> getByStatus(@RequestParam String status) {
+        return service.getByStatus(status);
+    }
+
+    @GetMapping("/update-status")
+    public MessageResponse updateStatus(@RequestParam String status, @RequestParam Long userId) throws NotFoundException {
+        try {
+            return new MessageResponse(service.updateStatus(status, userId));
+        }catch (NotFoundException e) {
+            return new MessageResponse(e.getMessage());
+        }
+    }
+
     @GetMapping("/active/{id}")
     public ResponseEntity<?> getActiveSubscribeByUserId(@PathVariable Long id) {
         SubscribeModelResponse response = service.getActiveSubscribeByUserId(id);
@@ -47,6 +74,5 @@ public class SubscriptionController {
                 ResponseEntity.ok(response)
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Subscribe not found"));
     }
-
 
 }
