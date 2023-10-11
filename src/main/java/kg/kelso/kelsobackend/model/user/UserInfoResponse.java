@@ -13,8 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfoResponse {
-    Long id;
     String username;
     String email;
-    List<String> roles;
+    String token;
 }

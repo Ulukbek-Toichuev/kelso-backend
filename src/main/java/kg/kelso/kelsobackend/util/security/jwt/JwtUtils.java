@@ -3,14 +3,12 @@ package kg.kelso.kelsobackend.util.security.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import kg.kelso.kelsobackend.util.security.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
 import java.security.Key;
 import java.util.Date;
@@ -28,18 +26,21 @@ public class JwtUtils {
     @Value("${kelso.app.jwtCookieName}")
     private String jwtCookie;
 
-    public String getJwtFromCookies(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, jwtCookie);
-        if (cookie != null) {
-            return cookie.getValue();
-        } else {
-            return null;
+    public String getJwtFromRequest(HttpServletRequest request) {
+        String jwtToken = null;
+        try {
+            jwtToken = request.getHeader("Authorization").split(" ")[1];
+        }catch (NullPointerException e) {
+            log.error("JWT Token is null: " + e);
         }
+
+        return jwtToken;
     }
 
-    public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-        String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-        return ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+    public String generateJwtCookie(UserDetailsImpl userPrincipal) {
+
+        //return ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+        return "Bearer " + generateTokenFromUsername(userPrincipal.getUsername());
     }
 
     public ResponseCookie getCleanJwtCookie() {

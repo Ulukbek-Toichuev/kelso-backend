@@ -1,5 +1,7 @@
 package kg.kelso.kelsobackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import kg.kelso.kelsobackend.entities.user.User;
 import kg.kelso.kelsobackend.service.auth.AuthService;
 import kg.kelso.kelsobackend.util.exception.NotFoundException;
@@ -40,6 +42,7 @@ public class TestController {
         return "Moderator Board.";
     }
 
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody

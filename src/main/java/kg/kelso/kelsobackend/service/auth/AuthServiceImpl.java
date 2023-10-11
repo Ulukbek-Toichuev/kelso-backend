@@ -70,19 +70,14 @@ public class AuthServiceImpl implements AuthService {
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-            ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-
-            List<String> roles = userDetails.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList());
+            String jwtToken = jwtUtils.generateJwtCookie(userDetails);
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, jwtToken)
                     .body(new UserInfoResponse(
-                            userDetails.getId(),
                             userDetails.getUsername(),
                             userDetails.getEmail(),
-                            roles
+                            jwtToken
                     ));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

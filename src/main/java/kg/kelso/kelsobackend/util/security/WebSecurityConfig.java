@@ -57,7 +57,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                //.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth
@@ -66,7 +66,10 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/genre/**").permitAll()
                                 .requestMatchers("/api/author/**").permitAll()
                                 .requestMatchers("/api/book/**").permitAll()
-                                .requestMatchers("/api/subscription/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
+                                .requestMatchers("/swagger-ui/index.html/**").permitAll()
+                                .requestMatchers("/swagger-ui.html/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
