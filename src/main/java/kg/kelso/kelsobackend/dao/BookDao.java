@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface BookDao extends JpaRepository<Book, Long> {
 
-    @Query("select b from Book b where b.rdt is null and b.is_available = true ")
+    @Query("select b from Book b where b.rdt is null")
     List<Book> getAll();
 
     @Modifying

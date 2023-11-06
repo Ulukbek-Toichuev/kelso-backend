@@ -29,6 +29,8 @@ public class BookModelResponse {
 
     String coverType;
 
+    Boolean available;
+
     AuthorModel author;
 
     List<GenreModel> genres;

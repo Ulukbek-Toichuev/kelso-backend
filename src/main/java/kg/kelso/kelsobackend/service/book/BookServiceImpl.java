@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<BookModelResponse> getAll(){
         return bookDao.getAll().stream().map(book -> new BookModelResponse(
-                book.getBook_id(), book.getIsbn(), book.getTitle(), book.getPrice(), book.getPage_count(), book.getCover_type().getTitle()
+                book.getBook_id(), book.getIsbn(), book.getTitle(), book.getPrice(), book.getPage_count(), book.getCover_type().getTitle(), book.getIs_available()
                 , new AuthorModel(book.getAuthor().getId(), book.getAuthor().getName())
                 , book.getGenres().stream().map(genre -> new GenreModel(genre.getGenre_id(), genre.getName())).collect(Collectors.toList())
         )).collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class BookServiceImpl implements BookService{
 
     private BookModelResponse mapToBookModel(Book book) {
         return new BookModelResponse(book.getBook_id(), book.getIsbn(), book.getTitle(), book.getPrice(), book.getPage_count()
-                , book.getCover_type().getTitle(), new AuthorModel(book.getAuthor().getId(), book.getAuthor().getName()),
+                , book.getCover_type().getTitle(), book.getIs_available(), new AuthorModel(book.getAuthor().getId(), book.getAuthor().getName()),
                 book.getGenres().stream().map(genre -> new GenreModel(genre.getGenre_id(), genre.getName())).collect(Collectors.toList()));
     }
 
